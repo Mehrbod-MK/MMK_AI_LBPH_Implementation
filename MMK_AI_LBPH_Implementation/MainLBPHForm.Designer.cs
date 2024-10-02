@@ -142,6 +142,7 @@
             Controls.Add(tableLayoutPanel1);
             Controls.Add(toolStripCommands);
             Controls.Add(menuStripMainMenu);
+            DoubleBuffered = true;
             MainMenuStrip = menuStripMainMenu;
             Name = "MainLBPHForm";
             RightToLeft = RightToLeft.Yes;

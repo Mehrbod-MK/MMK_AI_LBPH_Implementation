@@ -28,5 +28,17 @@ namespace MMK_AI_LBPH_Implementation
 
             return null;
         }
+
+        public static DialogResult ShowErrorMessageBox(string title, string text, MessageBoxButtons buttons, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
+        {
+            return MessageBox.Show(
+                caption: title,
+                text: text,
+                buttons: buttons,
+                icon: MessageBoxIcon.Error,
+                defaultButton: defaultButton,
+                options: MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading
+                );
+        }
     }
 }
