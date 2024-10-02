@@ -34,31 +34,44 @@ namespace MMK_AI_LBPH_Implementation
 
             string currentStatus = string.Empty;
             int imagesLoaded = 0;
+            string currentImageFilePath = string.Empty;
+            LBPHImage? lbphImage = null;
 
             workerAddImages.DoWork += (sender, e) =>
             {
                 foreach(var bitmapFile in inputFiles)
                 {
-                    currentStatus = $"Loading image:  {Path.GetFileName(bitmapFile)}";
+                    currentImageFilePath = bitmapFile;
+
+                    currentStatus = $"بارگزاری تصویر:  {Path.GetFileName(bitmapFile)}";
                     workerAddImages.ReportProgress(0);
 
                     try
                     {
-                        LBPHImage lbphImage = new LBPHImage();
+                        lbphImage = new LBPHImage()
+                        {
+                            ImageName = Path.GetFileName(bitmapFile),
+                            Label = Path.GetFileNameWithoutExtension(bitmapFile),
+                        };
                         using (Bitmap bitmap = new Bitmap(bitmapFile))
                         {
-                            currentStatus = $"Converting image to grayscale:  {Path.GetFileName(bitmapFile)}";
+                            currentStatus = $"در حال تبدیل به تصویر سیاه‌سفید:  {Path.GetFileName(bitmapFile)}";
                             workerAddImages.ReportProgress(0);
 
                             lbphImage.LoadGrayscale(bitmap);
 
+                            lbphImage = ImageDisplay.EditLBPHImageProperties(lbphImage);
 
+                            if(lbphImage != null)
+                                workerAddImages.ReportProgress(1);
                         }
                     }
                     catch (Exception ex)
                     {
-                        if (Helpers.ShowErrorMessageBox("خطای بارگزاری تصویر", $"خطایی در بارگزاری تصویر پیش آمد:\n\n{ex.ToString()}\n\nآیا مایل به ادامه فرایند بارگیری تصاویر هستید؟", MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button1)
-                        == DialogResult.No)
+                        if (Helpers.ShowErrorMessageBox("خطای بارگزاری تصویر", 
+                            $"خطایی در بارگزاری تصویر پیش آمد:\n\n{ex.ToString()}\n\nآیا مایل به ادامه فرایند بارگیری تصاویر هستید؟", 
+                            MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button1)
+                                == DialogResult.No)
                         {
                             break;
                         };
@@ -67,9 +80,23 @@ namespace MMK_AI_LBPH_Implementation
             };
             workerAddImages.ProgressChanged += (sender, e) =>
             {
-                loadingForm.progressBarProgress.Maximum = inputFiles.Length;
-                loadingForm.progressBarProgress.Value = imagesLoaded;
-                loadingForm.labelStatus.Text = currentStatus;
+                switch(e.ProgressPercentage)
+                {
+                    case 0:
+                        loadingForm.progressBarProgress.Maximum = inputFiles.Length;
+                        loadingForm.progressBarProgress.Value = imagesLoaded;
+                        loadingForm.labelStatus.Text = currentStatus;
+                        break;
+
+                    case 1:
+                        if(lbphImage != null)
+                        {
+                            context.Images.Add(lbphImage);
+
+                            listViewTrain.Items.Add(new ListViewItem(new string[] { lbphImage.ImageName, lbphImage.Label, currentImageFilePath, $"{lbphImage.ImageObject?.Width} در {lbphImage.ImageObject?.Height}" }));
+                        }
+                        break;
+                }
             };
             workerAddImages.RunWorkerCompleted += (sender, e) =>
             {

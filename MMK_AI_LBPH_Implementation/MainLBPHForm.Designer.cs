@@ -33,6 +33,10 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             groupBoxTrain = new GroupBox();
             listViewTrain = new ListView();
+            columnHeaderImageName = new ColumnHeader();
+            columnHeaderImageLabel = new ColumnHeader();
+            columnHeaderImagePath = new ColumnHeader();
+            columnHeaderImageDimensions = new ColumnHeader();
             groupBoxTest = new GroupBox();
             toolStripCommands = new ToolStrip();
             toolStripButtonAddTrainImage = new ToolStripButton();
@@ -92,15 +96,33 @@
             // 
             // listViewTrain
             // 
+            listViewTrain.Columns.AddRange(new ColumnHeader[] { columnHeaderImageName, columnHeaderImageLabel, columnHeaderImagePath, columnHeaderImageDimensions });
             listViewTrain.Dock = DockStyle.Fill;
             listViewTrain.FullRowSelect = true;
             listViewTrain.GridLines = true;
             listViewTrain.Location = new Point(3, 23);
             listViewTrain.Name = "listViewTrain";
+            listViewTrain.RightToLeftLayout = true;
             listViewTrain.Size = new Size(329, 342);
             listViewTrain.TabIndex = 0;
             listViewTrain.UseCompatibleStateImageBehavior = false;
             listViewTrain.View = View.Details;
+            // 
+            // columnHeaderImageName
+            // 
+            columnHeaderImageName.Text = "نام تصویر";
+            // 
+            // columnHeaderImageLabel
+            // 
+            columnHeaderImageLabel.Text = "برچسب";
+            // 
+            // columnHeaderImagePath
+            // 
+            columnHeaderImagePath.Text = "مسیر روی دیسک";
+            // 
+            // columnHeaderImageDimensions
+            // 
+            columnHeaderImageDimensions.Text = "ابعاد";
             // 
             // groupBoxTest
             // 
@@ -130,8 +152,8 @@
             toolStripButtonAddTrainImage.ImageTransparentColor = Color.Magenta;
             toolStripButtonAddTrainImage.Name = "toolStripButtonAddTrainImage";
             toolStripButtonAddTrainImage.RightToLeftAutoMirrorImage = true;
-            toolStripButtonAddTrainImage.Size = new Size(150, 34);
-            toolStripButtonAddTrainImage.Text = "داده Train جدید...";
+            toolStripButtonAddTrainImage.Size = new Size(126, 34);
+            toolStripButtonAddTrainImage.Text = "تصویر جدید...";
             toolStripButtonAddTrainImage.Click += toolStripButtonAddTrainImage_Click;
             // 
             // MainLBPHForm
@@ -169,5 +191,9 @@
         private GroupBox groupBoxTest;
         private ToolStrip toolStripCommands;
         private ToolStripButton toolStripButtonAddTrainImage;
+        private ColumnHeader columnHeaderImageName;
+        private ColumnHeader columnHeaderImageLabel;
+        private ColumnHeader columnHeaderImagePath;
+        private ColumnHeader columnHeaderImageDimensions;
     }
 }

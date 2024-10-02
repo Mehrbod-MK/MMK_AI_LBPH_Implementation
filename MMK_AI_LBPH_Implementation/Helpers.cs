@@ -40,5 +40,44 @@ namespace MMK_AI_LBPH_Implementation
                 options: MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading
                 );
         }
+
+        public static DialogResult ShowWarningMessageBox(string title, string text, MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
+        {
+            return MessageBox.Show(
+                caption: title,
+                text: text,
+                buttons: buttons,
+                icon: MessageBoxIcon.Warning,
+                defaultButton: defaultButton,
+                options: MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading
+                );
+        }
+
+        public static bool IsBlankString(string? str)
+        {
+            return string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str);
+        }
+
+        public static void ShowImageFullDisplay(Image image)
+        {
+            Form form = new Form()
+            {
+                Text = "نمایشگر تصویر",
+                RightToLeft = RightToLeft.Yes,
+                RightToLeftLayout = true,
+                WindowState = FormWindowState.Maximized,
+                Size = new Size(640, 480),
+            };
+            PictureBox pictureBox = new PictureBox()
+            {
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Dock = DockStyle.Fill,
+                Image = image,
+            };
+
+            form.Controls.Add(pictureBox);
+
+            form.ShowDialog();
+        }
     }
 }

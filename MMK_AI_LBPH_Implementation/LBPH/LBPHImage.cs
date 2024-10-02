@@ -13,8 +13,8 @@ namespace MMK_AI_LBPH_Implementation.LBPH
         private Bitmap? imageObject = null;
 
         public string ImageName { get => imageName; set => imageName = value; }
-        private string Label { get => label; set => label = value; }
-        private Bitmap? ImageObject => imageObject;
+        public string Label { get => label; set => label = value; }
+        public Bitmap? ImageObject => imageObject;
 
         public void LoadGrayscale(Bitmap inputImage)
         {
@@ -24,12 +24,12 @@ namespace MMK_AI_LBPH_Implementation.LBPH
                 {
                     var pixel = inputImage.GetPixel(i, j);
                     var grayScaledPixelColorValue =
-                        (int)Math.Floor(0.299 * pixel.R) +
-                        (int)Math.Floor(0.587 * pixel.G) +
-                        (int)Math.Floor(0.114 * pixel.B);
+                        (int)Math.Floor(0.3 * pixel.R) +
+                        (int)Math.Floor(0.59 * pixel.G) +
+                        (int)Math.Floor(0.11 * pixel.B);
 
                     pixel = Color.FromArgb(
-                        0xff,
+                        pixel.A,
                         grayScaledPixelColorValue,
                         grayScaledPixelColorValue,
                         grayScaledPixelColorValue
