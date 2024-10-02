@@ -63,7 +63,18 @@ namespace MMK_AI_LBPH_Implementation
                             lbphImage = ImageDisplay.EditLBPHImageProperties(lbphImage);
 
                             if(lbphImage != null)
+                            {
+                                currentStatus = $"در حال به‌روزرسانی مدل:  {Path.GetFileName(bitmapFile)}";
+                                workerAddImages.ReportProgress(0);
+
+                                // Train image.
+                                lbphImage.Train(context.Radius, context.GridX, context.GridY);
+
                                 workerAddImages.ReportProgress(1);
+
+                                imagesLoaded++;
+                                workerAddImages.ReportProgress(0);
+                            }
                         }
                     }
                     catch (Exception ex)
