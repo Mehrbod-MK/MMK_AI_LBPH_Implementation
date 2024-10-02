@@ -31,10 +31,15 @@
             menuStripMainMenu = new MenuStrip();
             پروندهToolStripMenuItem = new ToolStripMenuItem();
             tableLayoutPanel1 = new TableLayoutPanel();
-            groupBoxTest = new GroupBox();
             groupBoxTrain = new GroupBox();
+            listViewTrain = new ListView();
+            groupBoxTest = new GroupBox();
+            toolStripCommands = new ToolStrip();
+            toolStripButtonAddTrainImage = new ToolStripButton();
             menuStripMainMenu.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            groupBoxTrain.SuspendLayout();
+            toolStripCommands.SuspendLayout();
             SuspendLayout();
             // 
             // menuStripMainMenu
@@ -63,36 +68,71 @@
             tableLayoutPanel1.Controls.Add(groupBoxTrain, 0, 1);
             tableLayoutPanel1.Controls.Add(groupBoxTest, 1, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 28);
+            tableLayoutPanel1.Location = new Point(0, 65);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 7F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 7F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(682, 425);
-            tableLayoutPanel1.TabIndex = 2;
+            tableLayoutPanel1.Size = new Size(682, 388);
+            tableLayoutPanel1.TabIndex = 7;
+            // 
+            // groupBoxTrain
+            // 
+            tableLayoutPanel1.SetColumnSpan(groupBoxTrain, 2);
+            groupBoxTrain.Controls.Add(listViewTrain);
+            groupBoxTrain.Dock = DockStyle.Fill;
+            groupBoxTrain.Location = new Point(344, 10);
+            groupBoxTrain.Name = "groupBoxTrain";
+            groupBoxTrain.Size = new Size(335, 368);
+            groupBoxTrain.TabIndex = 1;
+            groupBoxTrain.TabStop = false;
+            groupBoxTrain.Text = "Train";
+            // 
+            // listViewTrain
+            // 
+            listViewTrain.Dock = DockStyle.Fill;
+            listViewTrain.FullRowSelect = true;
+            listViewTrain.GridLines = true;
+            listViewTrain.Location = new Point(3, 23);
+            listViewTrain.Name = "listViewTrain";
+            listViewTrain.Size = new Size(329, 342);
+            listViewTrain.TabIndex = 0;
+            listViewTrain.UseCompatibleStateImageBehavior = false;
+            listViewTrain.View = View.Details;
             // 
             // groupBoxTest
             // 
             groupBoxTest.Dock = DockStyle.Fill;
             groupBoxTest.Location = new Point(10, 10);
             groupBoxTest.Name = "groupBoxTest";
-            groupBoxTest.Size = new Size(328, 405);
+            groupBoxTest.Size = new Size(328, 368);
             groupBoxTest.TabIndex = 0;
             groupBoxTest.TabStop = false;
             groupBoxTest.Text = "Test";
             // 
-            // groupBoxTrain
+            // toolStripCommands
             // 
-            tableLayoutPanel1.SetColumnSpan(groupBoxTrain, 2);
-            groupBoxTrain.Dock = DockStyle.Fill;
-            groupBoxTrain.Location = new Point(344, 10);
-            groupBoxTrain.Name = "groupBoxTrain";
-            groupBoxTrain.Size = new Size(335, 405);
-            groupBoxTrain.TabIndex = 1;
-            groupBoxTrain.TabStop = false;
-            groupBoxTrain.Text = "Train";
+            toolStripCommands.GripStyle = ToolStripGripStyle.Hidden;
+            toolStripCommands.ImageScalingSize = new Size(30, 30);
+            toolStripCommands.Items.AddRange(new ToolStripItem[] { toolStripButtonAddTrainImage });
+            toolStripCommands.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            toolStripCommands.Location = new Point(0, 28);
+            toolStripCommands.Name = "toolStripCommands";
+            toolStripCommands.Size = new Size(682, 37);
+            toolStripCommands.TabIndex = 6;
+            toolStripCommands.Text = "نوار ابزار";
+            // 
+            // toolStripButtonAddTrainImage
+            // 
+            toolStripButtonAddTrainImage.Image = Properties.Resources.button_AddImage_copy;
+            toolStripButtonAddTrainImage.ImageTransparentColor = Color.Magenta;
+            toolStripButtonAddTrainImage.Name = "toolStripButtonAddTrainImage";
+            toolStripButtonAddTrainImage.RightToLeftAutoMirrorImage = true;
+            toolStripButtonAddTrainImage.Size = new Size(150, 34);
+            toolStripButtonAddTrainImage.Text = "داده Train جدید...";
+            toolStripButtonAddTrainImage.Click += toolStripButtonAddTrainImage_Click;
             // 
             // MainLBPHForm
             // 
@@ -100,6 +140,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(682, 453);
             Controls.Add(tableLayoutPanel1);
+            Controls.Add(toolStripCommands);
             Controls.Add(menuStripMainMenu);
             MainMenuStrip = menuStripMainMenu;
             Name = "MainLBPHForm";
@@ -110,6 +151,9 @@
             menuStripMainMenu.ResumeLayout(false);
             menuStripMainMenu.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
+            groupBoxTrain.ResumeLayout(false);
+            toolStripCommands.ResumeLayout(false);
+            toolStripCommands.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -119,7 +163,10 @@
         private MenuStrip menuStripMainMenu;
         private ToolStripMenuItem پروندهToolStripMenuItem;
         private TableLayoutPanel tableLayoutPanel1;
-        private GroupBox groupBoxTest;
         private GroupBox groupBoxTrain;
+        private ListView listViewTrain;
+        private GroupBox groupBoxTest;
+        private ToolStrip toolStripCommands;
+        private ToolStripButton toolStripButtonAddTrainImage;
     }
 }
