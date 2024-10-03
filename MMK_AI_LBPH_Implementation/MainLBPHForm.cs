@@ -39,7 +39,7 @@ namespace MMK_AI_LBPH_Implementation
 
             workerAddImages.DoWork += (sender, e) =>
             {
-                foreach(var bitmapFile in inputFiles)
+                foreach (var bitmapFile in inputFiles)
                 {
                     currentImageFilePath = bitmapFile;
 
@@ -62,7 +62,7 @@ namespace MMK_AI_LBPH_Implementation
 
                             lbphImage = ImageDisplay.EditLBPHImageProperties(lbphImage);
 
-                            if(lbphImage != null)
+                            if (lbphImage != null)
                             {
                                 currentStatus = $"در حال به‌روزرسانی مدل:  {Path.GetFileName(bitmapFile)}";
                                 workerAddImages.ReportProgress(0);
@@ -79,8 +79,8 @@ namespace MMK_AI_LBPH_Implementation
                     }
                     catch (Exception ex)
                     {
-                        if (Helpers.ShowErrorMessageBox("خطای بارگزاری تصویر", 
-                            $"خطایی در بارگزاری تصویر پیش آمد:\n\n{ex.ToString()}\n\nآیا مایل به ادامه فرایند بارگیری تصاویر هستید؟", 
+                        if (Helpers.ShowErrorMessageBox("خطای بارگزاری تصویر",
+                            $"خطایی در بارگزاری تصویر پیش آمد:\n\n{ex.ToString()}\n\nآیا مایل به ادامه فرایند بارگیری تصاویر هستید؟",
                             MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button1)
                                 == DialogResult.No)
                         {
@@ -91,7 +91,7 @@ namespace MMK_AI_LBPH_Implementation
             };
             workerAddImages.ProgressChanged += (sender, e) =>
             {
-                switch(e.ProgressPercentage)
+                switch (e.ProgressPercentage)
                 {
                     case 0:
                         loadingForm.progressBarProgress.Maximum = inputFiles.Length;
@@ -100,9 +100,9 @@ namespace MMK_AI_LBPH_Implementation
                         break;
 
                     case 1:
-                        if(lbphImage != null)
+                        if (lbphImage != null)
                         {
-                            context.Images.Add(lbphImage);
+                            context.TrainImages.Add(lbphImage);
 
                             listViewTrain.Items.Add(new ListViewItem(new string[] { lbphImage.ImageName, lbphImage.Label, currentImageFilePath, $"{lbphImage.ImageObject?.Width} در {lbphImage.ImageObject?.Height}" }));
                         }
@@ -120,6 +120,27 @@ namespace MMK_AI_LBPH_Implementation
             Enabled = false;
             workerAddImages.RunWorkerAsync();
             loadingForm.ShowDialog();
+        }
+
+        private void toolStripButtonRemoveSelectedTrainImage_Click(object sender, EventArgs e)
+        {
+            if (listViewTrain.SelectedIndices.Count > 0)
+            {
+                listViewTrain.Items.RemoveAt(listViewTrain.SelectedIndices[0]);
+                context.TrainImages.RemoveAt(listViewTrain.SelectedIndices[0]);
+            }
+        }
+
+        private void listViewTest_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(listViewTest.SelectedIndices.Count <= 0)
+            {
+                pictureBoxTestImage.Image = null;
+            }
+            else
+            {
+                pictureBoxTestImage.Image = context.TestImages[listViewTest.SelectedIndices[0]];
+            }
         }
     }
 }

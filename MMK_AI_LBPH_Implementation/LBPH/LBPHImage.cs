@@ -63,6 +63,13 @@ namespace MMK_AI_LBPH_Implementation.LBPH
                 return '0';
         }
 
+        public static List<float[]>? GetBitmapHistogram(LBPHContext context, Bitmap bitmap)
+        {
+            LBPHImage image = new LBPHImage() { imageObject = bitmap };
+            image.Train(context.Radius, context.GridX, context.GridY);
+            return image.Histograms;
+        }
+
         public void Train(int radius, int gridX, int gridY)
         {
             if (radius <= 0)
