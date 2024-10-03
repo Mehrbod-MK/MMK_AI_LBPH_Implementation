@@ -12,14 +12,14 @@ namespace MMK_AI_LBPH_Implementation.LBPH
         private string imageName = string.Empty;
         private string label = string.Empty;
         private Bitmap? imageObject = null;
-        private List<float[]>? histograms = null;
+        private List<double>? histograms = null;
 
         private List<List<long>>? patternedBitmap = null;
 
         public string ImageName { get => imageName; set => imageName = value; }
         public string Label { get => label; set => label = value; }
         public Bitmap? ImageObject => imageObject;
-        public List<float[]>? Histograms => histograms;
+        public List<double>? Histograms => histograms;
 
         public enum DistanceCalculationModes
         {
@@ -63,7 +63,7 @@ namespace MMK_AI_LBPH_Implementation.LBPH
                 return '0';
         }
 
-        public static List<float[]>? GetBitmapHistogram(LBPHContext context, Bitmap bitmap)
+        public static List<double>? GetBitmapHistogram(LBPHContext context, Bitmap bitmap)
         {
             LBPHImage image = new LBPHImage() { imageObject = bitmap };
             image.Train(context.Radius, context.GridX, context.GridY);
@@ -79,7 +79,9 @@ namespace MMK_AI_LBPH_Implementation.LBPH
                 throw new NullReferenceException("عکس در فرمت سیاه‌سفید بارگیری نشده است.");
 
             // Resize bitmap.
-            Bitmap resizedBitmap = new Bitmap(imageObject, 32, 32);
+            Bitmap resizedBitmap = new Bitmap(imageObject);
+
+            // Helpers.ShowImageFullDisplay(resizedBitmap);
 
             // Calculate local binary patterns.
             patternedBitmap = new List<List<long>>();
@@ -119,7 +121,7 @@ namespace MMK_AI_LBPH_Implementation.LBPH
 
             // Calculate histograms.
             int numCells = (2 * radius + 1) * (2 * radius + 1) - 1;
-            histograms = new List<float[]>();
+            histograms = new List<double>();
 
             int rows = patternedBitmap.Count;
             int columns = patternedBitmap[0].Count;
@@ -136,7 +138,7 @@ namespace MMK_AI_LBPH_Implementation.LBPH
             {
                 for (int gX = 0; gX < gridX; gX++)
                 {
-                    float[] regionHistogram = new float[(long)Math.Pow(2, numCells)];
+                    double[] regionHistogram = new double[(long)Math.Pow(2, numCells)];
 
                     int startPosX = gX * gridWidth;
                     int startPosY = gY * gridHeight;
@@ -169,7 +171,7 @@ namespace MMK_AI_LBPH_Implementation.LBPH
                     }
 
                     // Add to current histograms.
-                    histograms.Add(regionHistogram);
+                    histograms.AddRange(regionHistogram);
                 }
             }
 

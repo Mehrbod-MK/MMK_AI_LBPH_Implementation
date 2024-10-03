@@ -133,13 +133,33 @@ namespace MMK_AI_LBPH_Implementation
 
         private void listViewTest_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listViewTest.SelectedIndices.Count <= 0)
+            if (listViewTest.SelectedIndices.Count <= 0)
             {
                 pictureBoxTestImage.Image = null;
             }
             else
             {
                 pictureBoxTestImage.Image = context.TestImages[listViewTest.SelectedIndices[0]];
+            }
+        }
+
+        private void buttonPredictTestImage_Click(object sender, EventArgs e)
+        {
+            label1.Text = context.Predict(context.TestImages[listViewTest.SelectedIndices[0]]);
+        }
+
+        private void toolStripButtonAddTestImage_Click(object sender, EventArgs e)
+        {
+            var newImageFiles = Helpers.OpenFiles("تصاویر آزمایشی را انتخاب کنید.",
+                "فایل‌های تصاویر|*.png;*.bmp;*.jpg;*.jpeg;*.tif|تمامی فایل‌ها|*.*", true);
+
+            if (newImageFiles == null)
+                return;
+
+            foreach(var imageFile in newImageFiles)
+            {
+                context.TestImages.Add(new Bitmap(imageFile));
+                listViewTest.Items.Add(new ListViewItem(new string[] { imageFile }));
             }
         }
     }

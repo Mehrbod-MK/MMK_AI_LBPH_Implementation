@@ -186,6 +186,7 @@
             button1.TextAlign = ContentAlignment.MiddleLeft;
             button1.TextImageRelation = TextImageRelation.ImageBeforeText;
             button1.UseVisualStyleBackColor = true;
+            button1.Click += buttonPredictTestImage_Click;
             // 
             // listViewTest
             // 
@@ -252,6 +253,7 @@
             toolStripButtonAddTestImage.RightToLeftAutoMirrorImage = true;
             toolStripButtonAddTestImage.Size = new Size(162, 34);
             toolStripButtonAddTestImage.Text = "تست تصویر جدید...";
+            toolStripButtonAddTestImage.Click += toolStripButtonAddTestImage_Click;
             // 
             // toolStripButtonRemoveSelectedTestImage
             // 

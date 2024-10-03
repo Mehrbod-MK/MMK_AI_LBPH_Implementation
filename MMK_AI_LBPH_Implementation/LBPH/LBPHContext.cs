@@ -17,5 +17,28 @@ namespace MMK_AI_LBPH_Implementation.LBPH
         public int Radius { get => radius; set => radius = value; }
         public int GridX { get => gridX; set => gridX = value; }
         public int GridY { get => gridY; set => gridY = value; }
+
+        public string Predict(Bitmap bitmap)
+        {
+            var inputHistogram = LBPHImage.GetBitmapHistogram(this, bitmap);
+
+            // Calculate first minimum distance.
+            double minDistance = LBPHMaths.HistogramDiffs_AbsoluteDifference(inputHistogram, trainImages[0].Histograms);
+            string minLabel = trainImages[0].Label;
+            
+            // Find the correct minimum distance.
+            for(int i = 1; i < trainImages.Count; i++)
+            {
+                var distance = LBPHMaths.HistogramDiffs_AbsoluteDifference(inputHistogram, trainImages[i].Histograms);
+
+                if((double.IsNaN(minDistance)) || (distance < minDistance))
+                {
+                    minDistance = distance;
+                    minLabel = trainImages[i].Label;
+                }
+            }
+
+            return minLabel;
+        }
     }
 }
